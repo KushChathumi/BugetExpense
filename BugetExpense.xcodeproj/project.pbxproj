@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D36F83AC2AA44D6400A07F28 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36F83AB2AA44D6400A07F28 /* SignUpView.swift */; };
+		D36F83AE2AA4536A00A07F28 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36F83AD2AA4536A00A07F28 /* DashboardView.swift */; };
 		D3CAEDA02AA2ECA3007FFCC5 /* BugetExpenseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CAED9F2AA2ECA3007FFCC5 /* BugetExpenseApp.swift */; };
 		D3CAEDA22AA2ECA3007FFCC5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CAEDA12AA2ECA3007FFCC5 /* ContentView.swift */; };
 		D3CAEDA42AA2ECA4007FFCC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3CAEDA32AA2ECA4007FFCC5 /* Assets.xcassets */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D36F83AB2AA44D6400A07F28 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		D36F83AD2AA4536A00A07F28 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		D3CAED9C2AA2ECA3007FFCC5 /* BugetExpense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BugetExpense.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3CAED9F2AA2ECA3007FFCC5 /* BugetExpenseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugetExpenseApp.swift; sourceTree = "<group>"; };
 		D3CAEDA12AA2ECA3007FFCC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -78,6 +82,8 @@
 			isa = PBXGroup;
 			children = (
 				D3CAEDB02AA35D89007FFCC5 /* SignInView.swift */,
+				D36F83AB2AA44D6400A07F28 /* SignUpView.swift */,
+				D36F83AD2AA4536A00A07F28 /* DashboardView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -168,6 +174,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3CAEDB32AA36157007FFCC5 /* LoginViewModel.swift in Sources */,
+				D36F83AE2AA4536A00A07F28 /* DashboardView.swift in Sources */,
+				D36F83AC2AA44D6400A07F28 /* SignUpView.swift in Sources */,
 				D3CAEDB12AA35D89007FFCC5 /* SignInView.swift in Sources */,
 				D3CAEDA22AA2ECA3007FFCC5 /* ContentView.swift in Sources */,
 				D3CAEDA02AA2ECA3007FFCC5 /* BugetExpenseApp.swift in Sources */,

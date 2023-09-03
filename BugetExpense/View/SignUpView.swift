@@ -1,13 +1,13 @@
 //
-//  SignInView.swift
+//  SignUpView.swift
 //  BugetExpense
 //
-//  Created by Kushani Abeysinghe on 2023-09-02.
+//  Created by Kushani Abeysinghe on 2023-09-03.
 //
 
 import SwiftUI
 
-struct SignInView: View {
+struct SignUpView: View {
     
     @StateObject var loginVM  :   LoginViewModel =  LoginViewModel()
     
@@ -16,37 +16,34 @@ struct SignInView: View {
             Color.white.ignoresSafeArea(.all)
             VStack (spacing: 10){
                 VStack(spacing: 2){
-                    Text("Welcome Back").font(.system(size: 30))
+                    Text("Sign Up").font(.system(size: 30))
                         .bold()
                         .foregroundColor(.purple)
-                    Image("login").resizable().scaledToFit()
-                    Text("Login to your account")
+                    Image("register").resizable().scaledToFit()
+                    Text("Create your account")
                         .font(.system(size: 20, weight: .semibold, design: .rounded))
                         .foregroundColor(.gray)
                 }
                 
-                BottomControllers(loginVM: loginVM)
+                SignUpBottomControllers(loginVM: loginVM)
             }
             Spacer()
         }
-        .fullScreenCover(isPresented: $loginVM.showSignUpView){
-            SignUpView()
-        }
         
-        .fullScreenCover(isPresented: $loginVM.showDashboardView){
-            DashboardView()
+        .fullScreenCover(isPresented: $loginVM.showSignInView){
+            SignInView()
         }
-        
+
     }
 }
 
-struct SignInView_Previews: PreviewProvider {
+struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInView()
+        SignUpView()
     }
 }
 
-struct BottomControllers: View  {
+struct SignUpBottomControllers: View  {
     
     @ObservedObject var loginVM  :  LoginViewModel
     @FocusState var focus
@@ -56,6 +53,23 @@ struct BottomControllers: View  {
             VStack{
                 HStack {
                     Image(systemName: "person.circle.fill")
+                    RoundedRectangle(cornerRadius: 10)
+                        .foregroundColor(Color("grey"))
+                        .frame(height: 50)
+                        .overlay{
+                            TextField("Name", text: $loginVM.name)
+                                .padding(.leading, 10)
+                                .focused($focus)
+                    }
+                }.padding(.horizontal,15)
+                    .background{
+                        RoundedRectangle(cornerRadius: 10).foregroundColor(Color("grey"))
+                    }
+            }.padding(.horizontal, 15)
+            
+            VStack{
+                HStack {
+                    Image(systemName: "envelope.circle.fill")
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(Color("grey"))
                         .frame(height: 50)
@@ -88,15 +102,11 @@ struct BottomControllers: View  {
                 
             }.padding(.horizontal, 15)
             
-            Label("Forget Your Password", systemImage: "")
-                .underline()
-                .foregroundColor(.blue)
-            
             Label("", systemImage: "")
                 .foregroundColor(.white)
                             
             Button{
-                loginVM.showDashboardView = true
+                loginVM.showSignInView = true
             } label: {
                 
                 ZStack {
@@ -106,7 +116,7 @@ struct BottomControllers: View  {
                         .frame(height: 50)
                     
                     
-                    Text("Login").bold()
+                    Text("Sign Up").bold()
                         .foregroundColor(.white)
                 }.padding(.horizontal , 20)
             }
@@ -115,16 +125,22 @@ struct BottomControllers: View  {
                 .foregroundColor(.white)
             
             HStack{
-                Label("Don't have account? ", systemImage: "")
+                Label("Have you already an account? ", systemImage: "")
                     .foregroundColor(.secondary)
+//                Label("Login", systemImage: "")
+//                    .underline()
+//                    .foregroundColor(.purple)
+//                    .fontWeight(.semibold)
+//                    .padding(.leading,-10)
+                
                 Button {
-                    loginVM.showSignUpView = true
+                    loginVM.showSignInView = true
                 } label: {
-                    Text("Sign Up")
+                    Text("Login")
                         .underline()
                         .foregroundColor(.purple)
                         .fontWeight(.semibold)
-                        .padding(.leading,-10)
+                        .padding(.leading, -10)
                 }
 
             }

@@ -11,7 +11,9 @@ import SwiftUI
 struct BugetExpenseApp: App {
     var body: some Scene {
         WindowGroup {
-            SignInView()
+            NavigationView {
+                SignInView()
+            }
         }
     }
 }
