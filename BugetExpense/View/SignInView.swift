@@ -55,14 +55,16 @@ struct BottomControllers: View  {
         VStack(spacing: 10){
             VStack{
                 HStack {
-                    Image(systemName: "person.circle.fill")
+//                    Image(systemName: "person.circle.fill")
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(Color("grey"))
                         .frame(height: 50)
                         .overlay{
-                            TextField("Email", text: $loginVM.email)
+                            TextField("Email Address", text: $loginVM.email)
                                 .padding(.leading, 10)
                                 .focused($focus)
+                                .autocorrectionDisabled(true)
+                                .autocapitalization(.none)
                     }
                 }.padding(.horizontal,15)
                     .background{
@@ -72,7 +74,7 @@ struct BottomControllers: View  {
             
             VStack (spacing: 10){
                 HStack {
-                    Image(systemName: "lock.circle.fill")
+//                    Image(systemName: "lock.circle.fill")
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(Color("grey"))
                         .frame(height: 50)
@@ -80,6 +82,8 @@ struct BottomControllers: View  {
                             SecureField("Password", text: $loginVM.password)
                                 .padding(.leading, 10)
                                 .focused($focus)
+                                .autocorrectionDisabled(true)
+                                .autocapitalization(.none)
                         }
                 }.padding(.horizontal,15)
                     .background{
@@ -88,15 +92,18 @@ struct BottomControllers: View  {
                 
             }.padding(.horizontal, 15)
             
-            Label("Forget Your Password", systemImage: "")
+            Text("Forget Your Password")
                 .underline()
                 .foregroundColor(.blue)
             
-            Label("", systemImage: "")
+            Text("")
                 .foregroundColor(.white)
                             
             Button{
-                loginVM.showDashboardView = true
+                //loginVM.showDashboardView = true
+                Task{
+                    try await loginVM.signIn(withEmail: loginVM.email, password: loginVM.password)
+                }
             } label: {
                 
                 ZStack {
@@ -111,24 +118,21 @@ struct BottomControllers: View  {
                 }.padding(.horizontal , 20)
             }
             
-            Label("", systemImage: "")
+            Text("")
                 .foregroundColor(.white)
-            
-            HStack{
-                Label("Don't have account? ", systemImage: "")
-                    .foregroundColor(.secondary)
+
                 Button {
                     loginVM.showSignUpView = true
                 } label: {
-                    Text("Sign Up")
-                        .underline()
-                        .foregroundColor(.purple)
-                        .fontWeight(.semibold)
-                        .padding(.leading,-10)
+                    HStack(spacing: 3) {
+                        Text("Don't have account? ")
+                            .foregroundColor(.secondary)
+                        Text("Sign Up")
+                            .underline()
+                            .foregroundColor(.purple)
+                            .fontWeight(.semibold)
+                    }
                 }
-
-            }
-            
         }.padding()
     }
 }

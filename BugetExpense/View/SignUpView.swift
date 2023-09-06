@@ -52,7 +52,7 @@ struct SignUpBottomControllers: View  {
         VStack(spacing: 10){
             VStack{
                 HStack {
-                    Image(systemName: "person.circle.fill")
+//                    Image(systemName: "person.circle.fill")
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(Color("grey"))
                         .frame(height: 50)
@@ -60,6 +60,7 @@ struct SignUpBottomControllers: View  {
                             TextField("Name", text: $loginVM.name)
                                 .padding(.leading, 10)
                                 .focused($focus)
+                                .autocorrectionDisabled(true)
                     }
                 }.padding(.horizontal,15)
                     .background{
@@ -69,7 +70,7 @@ struct SignUpBottomControllers: View  {
             
             VStack{
                 HStack {
-                    Image(systemName: "envelope.circle.fill")
+//                    Image(systemName: "envelope.circle.fill")
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(Color("grey"))
                         .frame(height: 50)
@@ -77,6 +78,8 @@ struct SignUpBottomControllers: View  {
                             TextField("Email", text: $loginVM.email)
                                 .padding(.leading, 10)
                                 .focused($focus)
+                                .autocorrectionDisabled(true)
+                                .autocapitalization(.none)
                     }
                 }.padding(.horizontal,15)
                     .background{
@@ -86,7 +89,7 @@ struct SignUpBottomControllers: View  {
             
             VStack (spacing: 10){
                 HStack {
-                    Image(systemName: "lock.circle.fill")
+//                    Image(systemName: "lock.circle.fill")
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(Color("grey"))
                         .frame(height: 50)
@@ -94,6 +97,8 @@ struct SignUpBottomControllers: View  {
                             SecureField("Password", text: $loginVM.password)
                                 .padding(.leading, 10)
                                 .focused($focus)
+                                .autocorrectionDisabled(true)
+                                .autocapitalization(.none)
                         }
                 }.padding(.horizontal,15)
                     .background{
@@ -102,11 +107,35 @@ struct SignUpBottomControllers: View  {
                 
             }.padding(.horizontal, 15)
             
-            Label("", systemImage: "")
+            VStack (spacing: 10){
+                HStack {
+//                    Image(systemName: "lock.circle.fill")
+                    RoundedRectangle(cornerRadius: 10)
+                        .foregroundColor(Color("grey"))
+                        .frame(height: 50)
+                        .overlay{
+                            SecureField("Confirm Password", text: $loginVM.confirmPassword)
+                                .padding(.leading, 10)
+                                .focused($focus)
+                                .autocorrectionDisabled(true)
+                                .autocapitalization(.none)
+                        }
+                }.padding(.horizontal,15)
+                    .background{
+                        RoundedRectangle(cornerRadius: 10).foregroundColor(Color("grey"))
+                    }
+                
+            }.padding(.horizontal, 15)
+            
+             Text("")
                 .foregroundColor(.white)
+            
                             
             Button{
-                loginVM.showSignInView = true
+//                loginVM.showSignInView = true
+                Task{
+                    try await loginVM.createUser(withEmail:loginVM.email, password: loginVM.password, name:loginVM.name)
+                }
             } label: {
                 
                 ZStack {
@@ -121,30 +150,23 @@ struct SignUpBottomControllers: View  {
                 }.padding(.horizontal , 20)
             }
             
-            Label("", systemImage: "")
+            Text("")
                 .foregroundColor(.white)
+
             
-            HStack{
-                Label("Have you already an account? ", systemImage: "")
-                    .foregroundColor(.secondary)
-//                Label("Login", systemImage: "")
-//                    .underline()
-//                    .foregroundColor(.purple)
-//                    .fontWeight(.semibold)
-//                    .padding(.leading,-10)
-                
                 Button {
                     loginVM.showSignInView = true
                 } label: {
-                    Text("Login")
-                        .underline()
-                        .foregroundColor(.purple)
-                        .fontWeight(.semibold)
-                        .padding(.leading, -10)
+                    HStack(spacing: 3) {
+                        Text("Have you already an account? ")
+                            .foregroundColor(.secondary)
+                        Text("Login")
+                            .underline()
+                            .foregroundColor(.purple)
+                            .fontWeight(.semibold)
+                    }
                 }
 
-            }
-            
         }.padding()
     }
 }

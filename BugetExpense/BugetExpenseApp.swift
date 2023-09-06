@@ -6,14 +6,22 @@
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct BugetExpenseApp: App {
+    
+    @StateObject var loginVM   =  LoginViewModel()
+    
+    init(){
+        FirebaseApp.configure()
+    }
+    
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                SignInView()
-            }
+                ContentView()
+                    .environmentObject(loginVM)
+
         }
     }
 }

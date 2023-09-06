@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @EnvironmentObject var loginVM: LoginViewModel
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        Group  {
+            if loginVM.userSession != nil {
+                DashboardView()
+            }else {
+                SignInView()
+            }
         }
-        .padding()
     }
 }
 
