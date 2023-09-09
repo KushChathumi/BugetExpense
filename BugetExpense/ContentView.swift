@@ -10,15 +10,16 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var loginVM: LoginViewModel
-    
+
     var body: some View {
         Group  {
             if loginVM.userSession != nil {
-                DashboardView()
+                ProfileView()
             }else {
                 SignInView()
             }
         }
+//        SignInView()
     }
 }
 

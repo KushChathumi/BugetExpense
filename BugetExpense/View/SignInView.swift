@@ -9,34 +9,33 @@ import SwiftUI
 
 struct SignInView: View {
     
-    @StateObject var loginVM  :   LoginViewModel =  LoginViewModel()
+//    @StateObject var loginVM  :   LoginViewModel =  LoginViewModel()
+    @EnvironmentObject var loginVM  :  LoginViewModel
     
     var body: some View {
-        ZStack {
-            Color.white.ignoresSafeArea(.all)
-            VStack (spacing: 10){
-                VStack(spacing: 2){
-                    Text("Welcome Back").font(.system(size: 30))
-                        .bold()
-                        .foregroundColor(.purple)
-                    Image("login").resizable().scaledToFit()
-                    Text("Login to your account")
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
-                        .foregroundColor(.gray)
+        NavigationStack{
+            ZStack {
+                Color.white.ignoresSafeArea(.all)
+                VStack (spacing: 10){
+                    VStack(spacing: 2){
+                        Text("Welcome Back").font(.system(size: 30))
+                            .bold()
+                            .foregroundColor(.purple)
+                            
+                        Image("login")
+                            .resizable()
+                            .scaledToFit()
+                            .padding(.vertical,5)
+                        Text("Login to your account")
+                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                            .foregroundColor(.gray)
+                    }
+                    
+                    BottomControllers()
                 }
-                
-                BottomControllers(loginVM: loginVM)
+                Spacer()
             }
-            Spacer()
         }
-        .fullScreenCover(isPresented: $loginVM.showSignUpView){
-            SignUpView()
-        }
-        
-        .fullScreenCover(isPresented: $loginVM.showDashboardView){
-            DashboardView()
-        }
-        
     }
 }
 
@@ -46,63 +45,85 @@ struct SignInView_Previews: PreviewProvider {
     }
 }
 
+//MARK: AuthenticationFormProtocol
+extension BottomControllers: AuthenticationFormProtocol{
+    var formIsValid: Bool{
+        return !email.isEmpty
+        && email.contains("@")
+        && !password.isEmpty
+        && password.count > 5
+    }
+}
+
 struct BottomControllers: View  {
     
-    @ObservedObject var loginVM  :  LoginViewModel
+    @State private var email = ""
+    @State private var password = ""
+    
+//    @ObservedObject var loginVM  :  LoginViewModel
+    @EnvironmentObject var loginVM  :  LoginViewModel
     @FocusState var focus
     
     var  body: some View{
-        VStack(spacing: 10){
+        VStack(alignment: .leading, spacing: 15){
             VStack{
-                HStack {
-//                    Image(systemName: "person.circle.fill")
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("Email Address")
+                        .foregroundColor(Color(.darkGray))
+                        .fontWeight(.semibold)
+                        .font(.footnote)
+                    
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(Color("grey"))
                         .frame(height: 50)
                         .overlay{
-                            TextField("Email Address", text: $loginVM.email)
+                            TextField("Email Address", text: $email)
                                 .padding(.leading, 10)
                                 .focused($focus)
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
                     }
-                }.padding(.horizontal,15)
-                    .background{
-                        RoundedRectangle(cornerRadius: 10).foregroundColor(Color("grey"))
-                    }
+                        .background{
+                            RoundedRectangle(cornerRadius: 10).foregroundColor(Color("grey"))
+                        }
+                }.padding(.horizontal,0)
+                    
             }.padding(.horizontal, 15)
             
             VStack (spacing: 10){
-                HStack {
-//                    Image(systemName: "lock.circle.fill")
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("Password")
+                    .foregroundColor(Color(.darkGray))
+                    .fontWeight(.semibold)
+                    .font(.footnote)
+                    
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(Color("grey"))
                         .frame(height: 50)
                         .overlay{
-                            SecureField("Password", text: $loginVM.password)
+                            SecureField("Password", text: $password)
                                 .padding(.leading, 10)
                                 .focused($focus)
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
+                        }.background{
+                            RoundedRectangle(cornerRadius: 10).foregroundColor(Color("grey"))
                         }
-                }.padding(.horizontal,15)
-                    .background{
-                        RoundedRectangle(cornerRadius: 10).foregroundColor(Color("grey"))
-                    }
+                }.padding(.horizontal,5)
+                    
                 
-            }.padding(.horizontal, 15)
+            }.padding(.horizontal, 10)
             
             Text("Forget Your Password")
-                .underline()
                 .foregroundColor(.blue)
+                .padding(.horizontal, 15)
             
             Text("")
                 .foregroundColor(.white)
                             
             Button{
-                //loginVM.showDashboardView = true
                 Task{
-                    try await loginVM.signIn(withEmail: loginVM.email, password: loginVM.password)
+                    try await loginVM.signIn(withEmail: email, password: password)
                 }
             } label: {
                 
@@ -115,24 +136,28 @@ struct BottomControllers: View  {
                     
                     Text("Login").bold()
                         .foregroundColor(.white)
+                        .font(.system(size: 25))
                 }.padding(.horizontal , 20)
-            }
+            }.disabled(!formIsValid)
+                .opacity(formIsValid ? 1.0 : 0.5)
             
             Text("")
                 .foregroundColor(.white)
 
-                Button {
-                    loginVM.showSignUpView = true
-                } label: {
-                    HStack(spacing: 3) {
-                        Text("Don't have account? ")
-                            .foregroundColor(.secondary)
-                        Text("Sign Up")
-                            .underline()
-                            .foregroundColor(.purple)
-                            .fontWeight(.semibold)
-                    }
-                }
+            NavigationLink{
+                SignUpView()
+                    .navigationBarBackButtonHidden(true)
+            } label: {
+                HStack(spacing: 3) {
+                    Text("Don't have account? ")
+                        .foregroundColor(.secondary)
+                    Text("Sign Up")
+                        .underline()
+                        .foregroundColor(.purple)
+                        .fontWeight(.semibold)
+                }.padding(.leading, 60)
+            }
+            
         }.padding()
     }
 }

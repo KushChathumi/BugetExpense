@@ -9,29 +9,30 @@ import SwiftUI
 
 struct SignUpView: View {
     
-    @StateObject var loginVM  :   LoginViewModel =  LoginViewModel()
+    
+//    @StateObject var loginVM  :   LoginViewModel =  LoginViewModel()
+    @EnvironmentObject var loginVM  :  LoginViewModel
     
     var body: some View {
         ZStack {
             Color.white.ignoresSafeArea(.all)
             VStack (spacing: 10){
                 VStack(spacing: 2){
-                    Text("Sign Up").font(.system(size: 30))
+                    Text("Sign Up")
+                        .font(.system(size: 30))
                         .bold()
                         .foregroundColor(.purple)
-                    Image("register").resizable().scaledToFit()
+                    Image("register")
+                        .resizable()
+                        .scaledToFit()
                     Text("Create your account")
                         .font(.system(size: 20, weight: .semibold, design: .rounded))
                         .foregroundColor(.gray)
                 }
                 
-                SignUpBottomControllers(loginVM: loginVM)
+                SignUpBottomControllers()
             }
-            Spacer()
-        }
-        
-        .fullScreenCover(isPresented: $loginVM.showSignInView){
-            SignInView()
+//            Spacer()
         }
 
     }
@@ -43,89 +44,93 @@ struct SignUpView_Previews: PreviewProvider {
     }
 }
 
+//MARK: AuthenticationFormProtocol
+extension SignUpBottomControllers: AuthenticationFormProtocol{
+    var formIsValid: Bool{
+        return !email.isEmpty
+        && email.contains("@")
+        && !password.isEmpty
+        && password.count > 5
+        && !name.isEmpty
+    }
+}
+
 struct SignUpBottomControllers: View  {
     
-    @ObservedObject var loginVM  :  LoginViewModel
+    @State private var email = ""
+    @State private var name = ""
+    @State private var password = ""
+    
+    @Environment(\.dismiss) var dismiss
+    
+//    @ObservedObject var loginVM  :  LoginViewModel
+    @EnvironmentObject var loginVM  :  LoginViewModel
     @FocusState var focus
     
     var  body: some View{
         VStack(spacing: 10){
             VStack{
-                HStack {
-//                    Image(systemName: "person.circle.fill")
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("Name")
+                        .foregroundColor(Color(.darkGray))
+                        .fontWeight(.semibold)
+                        .font(.footnote)
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(Color("grey"))
                         .frame(height: 50)
                         .overlay{
-                            TextField("Name", text: $loginVM.name)
+                            TextField("Name", text: $name)
                                 .padding(.leading, 10)
                                 .focused($focus)
                                 .autocorrectionDisabled(true)
-                    }
-                }.padding(.horizontal,15)
-                    .background{
+                    }.background{
                         RoundedRectangle(cornerRadius: 10).foregroundColor(Color("grey"))
                     }
-            }.padding(.horizontal, 15)
+                }.padding(.horizontal,5)
+                    
+            }.padding(.horizontal, 10)
             
             VStack{
-                HStack {
-//                    Image(systemName: "envelope.circle.fill")
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("Email Address")
+                        .foregroundColor(Color(.darkGray))
+                        .fontWeight(.semibold)
+                        .font(.footnote)
+                    
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(Color("grey"))
                         .frame(height: 50)
                         .overlay{
-                            TextField("Email", text: $loginVM.email)
+                            TextField("Email", text: $email)
                                 .padding(.leading, 10)
                                 .focused($focus)
-                                .autocorrectionDisabled(true)
-                                .autocapitalization(.none)
-                    }
-                }.padding(.horizontal,15)
-                    .background{
+                    }.background{
                         RoundedRectangle(cornerRadius: 10).foregroundColor(Color("grey"))
                     }
-            }.padding(.horizontal, 15)
+                }.padding(.horizontal,5)
+            }.padding(.horizontal, 10)
             
             VStack (spacing: 10){
-                HStack {
-//                    Image(systemName: "lock.circle.fill")
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("Password")
+                        .foregroundColor(Color(.darkGray))
+                        .fontWeight(.semibold)
+                        .font(.footnote)
+                    
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(Color("grey"))
                         .frame(height: 50)
                         .overlay{
-                            SecureField("Password", text: $loginVM.password)
+                            SecureField("Password", text: $password)
                                 .padding(.leading, 10)
                                 .focused($focus)
                                 .autocorrectionDisabled(true)
                                 .autocapitalization(.none)
+                        } .background{
+                            RoundedRectangle(cornerRadius: 10).foregroundColor(Color("grey"))
                         }
-                }.padding(.horizontal,15)
-                    .background{
-                        RoundedRectangle(cornerRadius: 10).foregroundColor(Color("grey"))
-                    }
-                
-            }.padding(.horizontal, 15)
-            
-            VStack (spacing: 10){
-                HStack {
-//                    Image(systemName: "lock.circle.fill")
-                    RoundedRectangle(cornerRadius: 10)
-                        .foregroundColor(Color("grey"))
-                        .frame(height: 50)
-                        .overlay{
-                            SecureField("Confirm Password", text: $loginVM.confirmPassword)
-                                .padding(.leading, 10)
-                                .focused($focus)
-                                .autocorrectionDisabled(true)
-                                .autocapitalization(.none)
-                        }
-                }.padding(.horizontal,15)
-                    .background{
-                        RoundedRectangle(cornerRadius: 10).foregroundColor(Color("grey"))
-                    }
-                
-            }.padding(.horizontal, 15)
+                }.padding(.horizontal,5)
+            }.padding(.horizontal, 10)
             
              Text("")
                 .foregroundColor(.white)
@@ -134,7 +139,7 @@ struct SignUpBottomControllers: View  {
             Button{
 //                loginVM.showSignInView = true
                 Task{
-                    try await loginVM.createUser(withEmail:loginVM.email, password: loginVM.password, name:loginVM.name)
+                    try await loginVM.createUser(withEmail: email, password: password, name: name)
                 }
             } label: {
                 
@@ -147,15 +152,18 @@ struct SignUpBottomControllers: View  {
                     
                     Text("Sign Up").bold()
                         .foregroundColor(.white)
+                        .font(.system(size: 25))
                 }.padding(.horizontal , 20)
-            }
+            }.disabled(!formIsValid)
+                .opacity(formIsValid ? 1.0 : 0.5)
             
             Text("")
                 .foregroundColor(.white)
 
             
                 Button {
-                    loginVM.showSignInView = true
+//                    loginVM.showSignInView = true
+                    dismiss()
                 } label: {
                     HStack(spacing: 3) {
                         Text("Have you already an account? ")
