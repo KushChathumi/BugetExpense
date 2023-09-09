@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D319054C2AA8C7D600953FCC /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D319054B2AA8C7D600953FCC /* ProfileView.swift */; };
-		D319054E2AA8D33500953FCC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D319054D2AA8D33500953FCC /* GoogleService-Info.plist */; };
 		D31905512AA8D41A00953FCC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D31905502AA8D41A00953FCC /* FirebaseAuth */; };
 		D31905532AA8D41A00953FCC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D31905522AA8D41A00953FCC /* FirebaseFirestore */; };
 		D31905552AA8D41A00953FCC /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D31905542AA8D41A00953FCC /* FirebaseFirestoreSwift */; };
@@ -16,6 +15,8 @@
 		D36F83AC2AA44D6400A07F28 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36F83AB2AA44D6400A07F28 /* SignUpView.swift */; };
 		D36F83AE2AA4536A00A07F28 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36F83AD2AA4536A00A07F28 /* DashboardView.swift */; };
 		D36F83B32AA4CBE500A07F28 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36F83B22AA4CBE500A07F28 /* User.swift */; };
+		D3B68F672AAC52C600A8FAD9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3B68F662AAC52C600A8FAD9 /* GoogleService-Info.plist */; };
+		D3B68F6A2AAC571200A8FAD9 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B68F692AAC571200A8FAD9 /* ForgotPasswordView.swift */; };
 		D3CAEDA02AA2ECA3007FFCC5 /* BugetExpenseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CAED9F2AA2ECA3007FFCC5 /* BugetExpenseApp.swift */; };
 		D3CAEDA22AA2ECA3007FFCC5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CAEDA12AA2ECA3007FFCC5 /* ContentView.swift */; };
 		D3CAEDA42AA2ECA4007FFCC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3CAEDA32AA2ECA4007FFCC5 /* Assets.xcassets */; };
@@ -26,10 +27,11 @@
 
 /* Begin PBXFileReference section */
 		D319054B2AA8C7D600953FCC /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		D319054D2AA8D33500953FCC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D36F83AB2AA44D6400A07F28 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		D36F83AD2AA4536A00A07F28 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		D36F83B22AA4CBE500A07F28 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D3B68F662AAC52C600A8FAD9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D3B68F692AAC571200A8FAD9 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		D3CAED9C2AA2ECA3007FFCC5 /* BugetExpense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BugetExpense.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3CAED9F2AA2ECA3007FFCC5 /* BugetExpenseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugetExpenseApp.swift; sourceTree = "<group>"; };
 		D3CAEDA12AA2ECA3007FFCC5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -54,6 +56,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D3B68F682AAC56D900A8FAD9 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				D3CAEDB02AA35D89007FFCC5 /* SignInView.swift */,
+				D36F83AB2AA44D6400A07F28 /* SignUpView.swift */,
+				D3B68F692AAC571200A8FAD9 /* ForgotPasswordView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		D3CAED932AA2ECA3007FFCC5 = {
 			isa = PBXGroup;
 			children = (
@@ -79,7 +91,7 @@
 				D3CAED9F2AA2ECA3007FFCC5 /* BugetExpenseApp.swift */,
 				D3CAEDA12AA2ECA3007FFCC5 /* ContentView.swift */,
 				D3CAEDA32AA2ECA4007FFCC5 /* Assets.xcassets */,
-				D319054D2AA8D33500953FCC /* GoogleService-Info.plist */,
+				D3B68F662AAC52C600A8FAD9 /* GoogleService-Info.plist */,
 				D3CAEDA52AA2ECA4007FFCC5 /* Preview Content */,
 			);
 			path = BugetExpense;
@@ -96,8 +108,7 @@
 		D3CAEDAD2AA2ED9E007FFCC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				D3CAEDB02AA35D89007FFCC5 /* SignInView.swift */,
-				D36F83AB2AA44D6400A07F28 /* SignUpView.swift */,
+				D3B68F682AAC56D900A8FAD9 /* Auth */,
 				D36F83AD2AA4536A00A07F28 /* DashboardView.swift */,
 				D319054B2AA8C7D600953FCC /* ProfileView.swift */,
 			);
@@ -189,7 +200,7 @@
 			files = (
 				D3CAEDA72AA2ECA4007FFCC5 /* Preview Assets.xcassets in Resources */,
 				D3CAEDA42AA2ECA4007FFCC5 /* Assets.xcassets in Resources */,
-				D319054E2AA8D33500953FCC /* GoogleService-Info.plist in Resources */,
+				D3B68F672AAC52C600A8FAD9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,6 +218,7 @@
 				D3CAEDB12AA35D89007FFCC5 /* SignInView.swift in Sources */,
 				D3CAEDA22AA2ECA3007FFCC5 /* ContentView.swift in Sources */,
 				D36F83B32AA4CBE500A07F28 /* User.swift in Sources */,
+				D3B68F6A2AAC571200A8FAD9 /* ForgotPasswordView.swift in Sources */,
 				D3CAEDA02AA2ECA3007FFCC5 /* BugetExpenseApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,6 +353,7 @@
 				DEVELOPMENT_TEAM = L7D52YQP4M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BugetExpense/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -370,6 +383,7 @@
 				DEVELOPMENT_TEAM = L7D52YQP4M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BugetExpense/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

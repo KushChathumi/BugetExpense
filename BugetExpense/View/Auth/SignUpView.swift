@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct SignUpView: View {
-    
-    
-//    @StateObject var loginVM  :   LoginViewModel =  LoginViewModel()
+
     @EnvironmentObject var loginVM  :  LoginViewModel
     
     var body: some View {
@@ -32,9 +30,12 @@ struct SignUpView: View {
                 
                 SignUpBottomControllers()
             }
-//            Spacer()
         }
-
+//        Error Message popuped
+        .alert("Error", isPresented: $loginVM.hasError) {
+        } message: {
+            Text(loginVM.errorMessage)
+        }
     }
 }
 
@@ -62,9 +63,8 @@ struct SignUpBottomControllers: View  {
     @State private var password = ""
     
     @Environment(\.dismiss) var dismiss
-    
-//    @ObservedObject var loginVM  :  LoginViewModel
     @EnvironmentObject var loginVM  :  LoginViewModel
+    
     @FocusState var focus
     
     var  body: some View{
@@ -101,7 +101,7 @@ struct SignUpBottomControllers: View  {
                         .foregroundColor(Color("grey"))
                         .frame(height: 50)
                         .overlay{
-                            TextField("Email", text: $email)
+                            TextField("example@gmail.com", text: $email)
                                 .padding(.leading, 10)
                                 .focused($focus)
                     }.background{
@@ -121,7 +121,7 @@ struct SignUpBottomControllers: View  {
                         .foregroundColor(Color("grey"))
                         .frame(height: 50)
                         .overlay{
-                            SecureField("Password", text: $password)
+                            SecureField("should be minimum 6 characters", text: $password)
                                 .padding(.leading, 10)
                                 .focused($focus)
                                 .autocorrectionDisabled(true)
@@ -135,9 +135,8 @@ struct SignUpBottomControllers: View  {
              Text("")
                 .foregroundColor(.white)
             
-                            
+             //Sign Up button
             Button{
-//                loginVM.showSignInView = true
                 Task{
                     try await loginVM.createUser(withEmail: email, password: password, name: name)
                 }
@@ -160,9 +159,8 @@ struct SignUpBottomControllers: View  {
             Text("")
                 .foregroundColor(.white)
 
-            
+            //Sign In button
                 Button {
-//                    loginVM.showSignInView = true
                     dismiss()
                 } label: {
                     HStack(spacing: 3) {

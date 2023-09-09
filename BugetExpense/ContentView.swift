@@ -14,17 +14,16 @@ struct ContentView: View {
     var body: some View {
         Group  {
             if loginVM.userSession != nil {
-                ProfileView()
+                DashboardView()
             }else {
                 SignInView()
             }
         }
-//        SignInView()
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}

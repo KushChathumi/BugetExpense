@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct SignInView: View {
-    
-//    @StateObject var loginVM  :   LoginViewModel =  LoginViewModel()
+
     @EnvironmentObject var loginVM  :  LoginViewModel
     
     var body: some View {
@@ -36,6 +35,11 @@ struct SignInView: View {
                 Spacer()
             }
         }
+//        Error Message popuped
+        .alert("Error", isPresented: $loginVM.hasError) {
+        } message: {
+            Text(loginVM.errorMessage)
+        }
     }
 }
 
@@ -55,12 +59,12 @@ extension BottomControllers: AuthenticationFormProtocol{
     }
 }
 
+//MARK: Login form creation
 struct BottomControllers: View  {
     
     @State private var email = ""
     @State private var password = ""
-    
-//    @ObservedObject var loginVM  :  LoginViewModel
+
     @EnvironmentObject var loginVM  :  LoginViewModel
     @FocusState var focus
     
@@ -77,7 +81,7 @@ struct BottomControllers: View  {
                         .foregroundColor(Color("grey"))
                         .frame(height: 50)
                         .overlay{
-                            TextField("Email Address", text: $email)
+                            TextField("example@gmail.com", text: $email)
                                 .padding(.leading, 10)
                                 .focused($focus)
                                 .autocorrectionDisabled(true)
@@ -114,13 +118,21 @@ struct BottomControllers: View  {
                 
             }.padding(.horizontal, 10)
             
-            Text("Forget Your Password")
-                .foregroundColor(.blue)
-                .padding(.horizontal, 15)
-            
+            //Forgot password
+            NavigationLink{
+                ForgotPasswordView()
+                    .navigationBarBackButtonHidden(true)
+            } label: {
+                HStack(spacing: 3) {
+                    Text("Forget Your Password")
+                        .foregroundColor(.blue)
+                }.padding(.leading, 20)
+            }
+
             Text("")
                 .foregroundColor(.white)
-                            
+
+            // Sign In button
             Button{
                 Task{
                     try await loginVM.signIn(withEmail: email, password: password)
@@ -134,9 +146,10 @@ struct BottomControllers: View  {
                         .frame(height: 50)
                     
                     
-                    Text("Login").bold()
+                    Text("Login")
+                        .bold()
                         .foregroundColor(.white)
-                        .font(.system(size: 25))
+                        .font(.system(size: 20))
                 }.padding(.horizontal , 20)
             }.disabled(!formIsValid)
                 .opacity(formIsValid ? 1.0 : 0.5)
@@ -144,6 +157,7 @@ struct BottomControllers: View  {
             Text("")
                 .foregroundColor(.white)
 
+            // Sign up Button
             NavigationLink{
                 SignUpView()
                     .navigationBarBackButtonHidden(true)
