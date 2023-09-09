@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct DashboardView: View {
+    
+    @EnvironmentObject var loginVM: LoginViewModel
+    
     var body: some View {
         List{
             Section("Charts") {
@@ -15,6 +18,19 @@ struct DashboardView: View {
             }
             Section ("Category")  {
                 
+            }
+            Section("Log out"){
+                Button {
+                    loginVM.signOut()
+                } label: {
+                    HStack(spacing: 9) {
+                        Image(systemName: "arrow.left.circle.fill")
+                            .tint(.red)
+                        Text("Sign out")
+                            .fontWeight(.semibold)
+                            .accentColor(.gray)
+                    }
+                }
             }
         }
     }
