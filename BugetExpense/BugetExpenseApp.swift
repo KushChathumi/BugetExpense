@@ -21,7 +21,6 @@ struct BugetExpenseApp: App {
         WindowGroup {
                 ContentView()
                     .environmentObject(loginVM)
-
         }
     }
 }
