@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct Category: Identifiable {
-    var id: ObjectIdentifier
-    let categoryName: String
+struct Category: Identifiable, Hashable {
+    var id: Int
+    var categoryName: String
     
-    init(id: ObjectIdentifier, categoryName: String) {
-        self.id = id
-        self.categoryName = categoryName
-    }
+//    init(id: Int, categoryName: String) {
+//        self.id = id
+//        self.categoryName = categoryName
+//    }
 }
