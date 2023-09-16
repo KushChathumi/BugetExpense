@@ -21,12 +21,12 @@ struct TransactionView: View {
     @State private var category: Category?
     
     @State private var categories: [Category] = [
-        Category(id: 0, categoryName: "Groceries"),
-        Category(id: 1, categoryName: "Bills"),
-        Category(id: 2, categoryName: "Subscriptions")
+        Category(id: "0", categoryName: "Groceries"),
+        Category(id: "1", categoryName: "Bills"),
+        Category(id: "2", categoryName: "Subscriptions")
     ]
     
-    @State private var selectedCategory: Category = Category(id: 0, categoryName: "Create a category first")
+    @State private var selectedCategory: Category = Category(id: "1", categoryName: "Create a category first")
     
     var body: some View {
         NavigationView {

@@ -16,7 +16,7 @@ struct SettingView: View {
             List{
                 Section ("Category")  {
                     NavigationLink{
-                        CategoriesView()
+                        CategoriesView(categoryVM: CategoryViewModel())
                     }label: {
                         HStack{
                             Text("Category")

@@ -8,11 +8,14 @@
 import Foundation
 
 struct Category: Identifiable, Hashable {
-    var id: Int
+    var id: String
     var categoryName: String
+//    var userID : String
     
-//    init(id: Int, categoryName: String) {
-//        self.id = id
-//        self.categoryName = categoryName
-//    }
+    init(id: String, categoryName: String) {
+        self.id = id
+        self.categoryName = categoryName
+//        self.userID = userID
+    }
+
 }

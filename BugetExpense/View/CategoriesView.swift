@@ -9,28 +9,34 @@ import SwiftUI
 
 struct CategoriesView: View {
     
+    @EnvironmentObject var loginVM  :  LoginViewModel
+    @ObservedObject var categoryVM : CategoryViewModel
     @State private var isAlertShowing = false
     @State private var newCategort: String = ""
-    @State private var categories: [Category] = [
-        Category(id: 0, categoryName: "Groceries"),
-        Category(id: 1, categoryName: "Bills"),
-        Category(id: 2, categoryName: "Subscriptions")
-    ]
     
     var body: some View {
         
         VStack {
-            List{
-                ForEach(categories) { category in
+            List (categoryVM.categories) { category in
+                HStack {
                     Text(category.categoryName)
+                    
+                    Spacer()
+                    
+                    Button {
+                        categoryVM.deleteData(deleteCategory: category)
+                    } label: {
+                        Image(systemName: "minus.circle")
+                            .tint(.red)
+                    }
+                    
                 }
-                .onDelete(perform: handelDelete)
             }
             
             Spacer()
             
             HStack(spacing: 16) {
-               TextField("New Category", text: $newCategort)
+                TextField("New Category", text: $newCategort)
                     .textFieldStyle(.roundedBorder)
                     .onSubmit {
                         handelSubmit()
@@ -38,7 +44,7 @@ struct CategoriesView: View {
                 
                 if newCategort.count > 0 {
                     Button{
-                            newCategort = ""
+                        newCategort = ""
                     } label: {
                         Label("clear", systemImage: "xmark.circle.fill")
                             .labelStyle(.iconOnly)
@@ -68,33 +74,27 @@ struct CategoriesView: View {
             
             Divider()
             
-            .padding(.bottom, 5)
-
-                
+                .padding(.bottom, 5)
         }
-//        .background(.white)
+        .onAppear {
+            // Call the getData() function when the view appears
+            categoryVM.getData()
+        }
     }
     
     func handelSubmit(){
         if newCategort.count > 0 {
-            categories.append(Category(
-                id: categories.count,
-                categoryName: newCategort
-            ))
+            categoryVM.addData(categoryName: newCategort)
             newCategort = ""
         }
         else {
             isAlertShowing = true
         }
     }
-    
-    func handelDelete(at offsets: IndexSet){
-        categories.remove(atOffsets: offsets)
-    }
 }
 
 struct CategoriesView_Previews: PreviewProvider {
     static var previews: some View {
-        CategoriesView()
+        CategoriesView(categoryVM: CategoryViewModel())
     }
 }

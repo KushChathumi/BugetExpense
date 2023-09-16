@@ -24,6 +24,7 @@
 		D36F83AC2AA44D6400A07F28 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36F83AB2AA44D6400A07F28 /* SignUpView.swift */; };
 		D36F83AE2AA4536A00A07F28 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36F83AD2AA4536A00A07F28 /* DashboardView.swift */; };
 		D36F83B32AA4CBE500A07F28 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36F83B22AA4CBE500A07F28 /* User.swift */; };
+		D39864A32AB5699D0063F450 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39864A22AB5699D0063F450 /* CategoryViewModel.swift */; };
 		D3B68F672AAC52C600A8FAD9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3B68F662AAC52C600A8FAD9 /* GoogleService-Info.plist */; };
 		D3B68F6A2AAC571200A8FAD9 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B68F692AAC571200A8FAD9 /* ForgotPasswordView.swift */; };
 		D3CAEDA02AA2ECA3007FFCC5 /* BugetExpenseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CAED9F2AA2ECA3007FFCC5 /* BugetExpenseApp.swift */; };
@@ -48,6 +49,7 @@
 		D36F83AB2AA44D6400A07F28 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		D36F83AD2AA4536A00A07F28 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		D36F83B22AA4CBE500A07F28 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D39864A22AB5699D0063F450 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		D3B68F662AAC52C600A8FAD9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D3B68F692AAC571200A8FAD9 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		D3CAED9C2AA2ECA3007FFCC5 /* BugetExpense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BugetExpense.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -154,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				D3CAEDB22AA36157007FFCC5 /* LoginViewModel.swift */,
+				D39864A22AB5699D0063F450 /* CategoryViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				D30D49732AB41EB000900B26 /* SettingView.swift in Sources */,
 				D35325172AAEB8A1000C9A1F /* TransactionView.swift in Sources */,
 				D3CAEDB12AA35D89007FFCC5 /* SignInView.swift in Sources */,
+				D39864A32AB5699D0063F450 /* CategoryViewModel.swift in Sources */,
 				D30D49712AB41E4300900B26 /* MainView.swift in Sources */,
 				D353251D2AAF58E1000C9A1F /* AddTransactionView.swift in Sources */,
 				D3CAEDA22AA2ECA3007FFCC5 /* ContentView.swift in Sources */,
