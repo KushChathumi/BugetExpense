@@ -6,16 +6,9 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
-struct Category: Identifiable, Hashable {
-    var id: String
+struct Category: Identifiable, Codable, Hashable {
+    var id: String?
     var categoryName: String
-//    var userID : String
-    
-    init(id: String, categoryName: String) {
-        self.id = id
-        self.categoryName = categoryName
-//        self.userID = userID
-    }
-
 }

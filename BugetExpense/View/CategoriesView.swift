@@ -13,7 +13,7 @@ struct CategoriesView: View {
     @ObservedObject var categoryVM : CategoryViewModel
     @State private var isAlertShowing = false
     @State private var newCategort: String = ""
-    
+
     var body: some View {
         
         VStack {
@@ -29,14 +29,14 @@ struct CategoriesView: View {
                         Image(systemName: "minus.circle")
                             .tint(.red)
                     }
-                    
+
                 }
             }
             
             Spacer()
             
             HStack(spacing: 16) {
-                TextField("New Category", text: $newCategort)
+               TextField("New Category", text: $newCategort)
                     .textFieldStyle(.roundedBorder)
                     .onSubmit {
                         handelSubmit()
@@ -44,7 +44,7 @@ struct CategoriesView: View {
                 
                 if newCategort.count > 0 {
                     Button{
-                        newCategort = ""
+                            newCategort = ""
                     } label: {
                         Label("clear", systemImage: "xmark.circle.fill")
                             .labelStyle(.iconOnly)
@@ -74,7 +74,7 @@ struct CategoriesView: View {
             
             Divider()
             
-                .padding(.bottom, 5)
+            .padding(.bottom, 5)
         }
         .onAppear {
             // Call the getData() function when the view appears
