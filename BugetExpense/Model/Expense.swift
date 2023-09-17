@@ -5,21 +5,25 @@
 //  Created by Kushani Abeysinghe on 2023-09-11.
 //
 
-import Foundation
- 
-class Expense {
+import Firebase
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
-    let title: String
-    let subTitle: String
-    let amount: Double
-    let date: Date
-    let categort: Category?
+struct Expense: Identifiable, Codable {
+    var id: String?
+    var title: String
+    var subtitle: String
+    var amount: Double
+    var date: Date
+    var category: Category
     
-    init(title: String, subTitle: String, amount: Double, date: Date, categort: Category? = nil) {
-        self.title = title
-        self.subTitle = subTitle
-        self.amount = amount
-        self.date = date
-        self.categort = categort
+    init() {
+        self.id = ""
+        self.title = ""
+        self.subtitle = ""
+        self.amount = 0.0
+        self.date = Date()
+        self.category = Category(id: "", categoryName: "")
     }
 }
+

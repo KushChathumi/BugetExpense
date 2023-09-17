@@ -14,9 +14,9 @@ struct MainView: View {
                 .tabItem{
                     Label("dashboard", systemImage: "tray.and.arrow.up.fill")
                 }
-            TransactionView()
+            ExpenseListView(expenseVM: ExpenseViewModel())
                 .tabItem{
-                    Label("Expenses", systemImage: "creditcard.fill")
+                    Label("Expenses2", systemImage: "creditcard.fill")
                 }
             ReportView()
                 .tabItem{
