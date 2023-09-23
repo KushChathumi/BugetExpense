@@ -24,7 +24,7 @@ struct CategoriesView: View {
                     Spacer()
                     
                     Button {
-                        categoryVM.deleteData(deleteCategory: category)
+                        categoryVM.deleteCategory(deleteCategory: category)
                     } label: {
                         Image(systemName: "minus.circle")
                             .tint(.red)
@@ -84,7 +84,7 @@ struct CategoriesView: View {
     
     func handelSubmit(){
         if newCategort.count > 0 {
-            categoryVM.addData(categoryName: newCategort)
+            categoryVM.addCategory(categoryName: newCategort)
             newCategort = ""
         }
         else {
@@ -95,6 +95,6 @@ struct CategoriesView: View {
 
 struct CategoriesView_Previews: PreviewProvider {
     static var previews: some View {
-        CategoriesView(categoryVM: CategoryViewModel())
+        CategoriesView(categoryVM: CategoryViewModel(userID: LoginViewModel().userSession?.uid ?? ""))
     }
 }
