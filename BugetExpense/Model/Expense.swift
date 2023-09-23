@@ -15,15 +15,16 @@ struct Expense: Identifiable, Codable {
     var subtitle: String
     var amount: Double
     var date: Date
+    var userID: String // This property holds the logged-in user's ID
     var category: Category
     
-    init() {
+    init(userID: String = "") {
         self.id = ""
         self.title = ""
         self.subtitle = ""
         self.amount = 0.0
         self.date = Date()
-        self.category = Category(id: "", categoryName: "")
+        self.userID = userID // Initialize with the logged-in user's ID
+        self.category = Category(categoryName: "", userID: userID) // Pass the userID to the Category as well
     }
 }
-
