@@ -9,8 +9,15 @@ import SwiftUI
 
 struct TransactionView: View {
     
-    @ObservedObject var transactionVM = TransactionViewModel()
+    @ObservedObject var transactionVM: TransactionViewModel
     @State var showMessage = false
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var loginVM : LoginViewModel
+    
+    init(userID: String) {
+        // Initialize TransactionViewModel with the provided userID
+        self._transactionVM = ObservedObject(initialValue: TransactionViewModel(userID: userID))
+    }
     
     var body: some View {
         NavigationView {
@@ -25,8 +32,8 @@ struct TransactionView: View {
                     }
                     
                     Section("Amount"){
-                            TextField("LKR", value: $transactionVM.expense.amount, formatter: NumberFormatter())
-                                .keyboardType(.numberPad)
+                        TextField("LKR", value: $transactionVM.expense.amount, formatter: NumberFormatter())
+                            .keyboardType(.numberPad)
                     }
                     Section("Date"){
                         DatePicker("Date", selection: $transactionVM.expense.date, displayedComponents: .date)
@@ -39,7 +46,7 @@ struct TransactionView: View {
                         }
                     }
                 }
-
+                
                 Button {
                     transactionVM.addExpense()
                     showMessage = true
@@ -57,17 +64,19 @@ struct TransactionView: View {
                 }
                 .foregroundColor(.white)
             }.background(.opacity(0.05))
-            .navigationTitle("Expenses")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink{
-                        ExpenseListView(expenseVM: ExpenseViewModel())
-                            .navigationBarBackButtonHidden(true)
-                    } label: {
-                        Image(systemName: "arrow.uturn.backward")
+                .navigationTitle("Expenses")
+                .navigationBarBackButtonHidden(true) // Hide the default back button
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        // Create a custom back button
+                        Button(action: {
+                            // Navigate back to the previous view
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Image(systemName: "arrow.uturn.backward")
+                        }
                     }
                 }
-            }
         }
         .onAppear {
             // Fetch categories when the view appears
@@ -87,6 +96,8 @@ struct TransactionView: View {
 
 struct TransactionView_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionView()
+        // Provide a userID when initializing TransactionView
+        let userID = LoginViewModel().currentUser?.id // Replace with the actual user ID
+        return TransactionView(userID: userID!)
     }
 }
