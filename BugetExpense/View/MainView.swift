@@ -8,15 +8,20 @@
 import SwiftUI
 
 struct MainView: View {
+    @EnvironmentObject var loginVM: LoginViewModel
     var body: some View {
         TabView{
-            DashboardView()
+            ExpenseView(viewModel: expsense(), loginVM: LoginViewModel(), userID: loginVM.currentUser?.id)
                 .tabItem{
                     Label("dashboard", systemImage: "tray.and.arrow.up.fill")
                 }
-            ExpenseListView(expenseVM: ExpenseViewModel())
+            UserProfileView()
                 .tabItem{
-                    Label("Expenses2", systemImage: "creditcard.fill")
+                    Label("dashboard2", systemImage: "tray.and.arrow.up.fill")
+                }
+            ExpenseListView(viewModel: expsense(), loginVM: LoginViewModel(), userID: loginVM.currentUser?.id)
+                .tabItem{
+                    Label("Expenses", systemImage: "creditcard.fill")
                 }
             ReportView()
                 .tabItem{
