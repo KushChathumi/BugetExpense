@@ -10,13 +10,13 @@ import SwiftUI
 struct SettingView: View {
     
     @EnvironmentObject var loginVM: LoginViewModel
-    
+
     var body: some View {
         NavigationView {
             List{
                 Section ("Category")  {
                     NavigationLink{
-                        CategoriesView(categoryVM: CategoryViewModel())
+                        CategoriesView(categoryVM: CategoryViewModel(userID: loginVM.userSession?.uid ?? ""))
                     }label: {
                         HStack{
                             Text("Category")

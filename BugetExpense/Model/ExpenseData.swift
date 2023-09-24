@@ -9,13 +9,13 @@ import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct ExpenseData: Identifiable, Codable {
+struct ExpenseData: Identifiable, Codable, Hashable {
     var id: String?
     var title: String
     var subtitle: String
     var amount: Double
     var date: Date
-//    var category: Category
+    
     
     var safeID: String {
         return id ?? UUID().uuidString

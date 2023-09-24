@@ -53,7 +53,7 @@ class TransactionViewModel: ObservableObject {
                 
                 // Calculate category expenses
                 self.calculateCategoryExpenses()
-                print("Fetched categories: \(self.categories)")
+//                print("Fetched categories: \(self.categories)")
             }
         }
     }

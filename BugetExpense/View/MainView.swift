@@ -11,15 +11,15 @@ struct MainView: View {
     @EnvironmentObject var loginVM: LoginViewModel
     var body: some View {
         TabView{
-            ExpenseView(viewModel: expsense(), loginVM: LoginViewModel(), userID: loginVM.currentUser?.id)
-                .tabItem{
-                    Label("dashboard", systemImage: "tray.and.arrow.up.fill")
-                }
+//            ExpenseListView(viewModel: ExpenseViewModel(), loginVM: LoginViewModel(), userID: loginVM.currentUser?.id)
+//                .tabItem{
+//                    Label("dashboard", systemImage: "tray.and.arrow.up.fill")
+//                }
             UserProfileView()
                 .tabItem{
                     Label("dashboard2", systemImage: "tray.and.arrow.up.fill")
                 }
-            ExpenseListView(viewModel: expsense(), loginVM: LoginViewModel(), userID: loginVM.currentUser?.id)
+            ExpenseView(viewModel: expsense(), loginVM: LoginViewModel(), userID: loginVM.currentUser?.id)
                 .tabItem{
                     Label("Expenses", systemImage: "creditcard.fill")
                 }
