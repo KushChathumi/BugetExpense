@@ -27,6 +27,7 @@
 		D35325152AAEB54E000C9A1F /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35325142AAEB54E000C9A1F /* Category.swift */; };
 		D35325172AAEB8A1000C9A1F /* TransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35325162AAEB8A1000C9A1F /* TransactionView.swift */; };
 		D35325192AAEB8B2000C9A1F /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35325182AAEB8B2000C9A1F /* ReportView.swift */; };
+		D36E59702AC481B6004E8D9B /* ReportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E596F2AC481B6004E8D9B /* ReportViewModel.swift */; };
 		D36F83AC2AA44D6400A07F28 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36F83AB2AA44D6400A07F28 /* SignUpView.swift */; };
 		D36F83AE2AA4536A00A07F28 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36F83AD2AA4536A00A07F28 /* DashboardView.swift */; };
 		D36F83B32AA4CBE500A07F28 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36F83B22AA4CBE500A07F28 /* User.swift */; };
@@ -39,6 +40,7 @@
 		D3CAEDA72AA2ECA4007FFCC5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3CAEDA62AA2ECA4007FFCC5 /* Preview Assets.xcassets */; };
 		D3CAEDB12AA35D89007FFCC5 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CAEDB02AA35D89007FFCC5 /* SignInView.swift */; };
 		D3CAEDB32AA36157007FFCC5 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CAEDB22AA36157007FFCC5 /* LoginViewModel.swift */; };
+		D3D13B062AC1DD3400CEB011 /* CategorizedExpenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D13B052AC1DD3400CEB011 /* CategorizedExpenses.swift */; };
 		D3FF9C262ABDEC6400798AFC /* CategoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FF9C252ABDEC6400798AFC /* CategoryData.swift */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +61,7 @@
 		D35325142AAEB54E000C9A1F /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		D35325162AAEB8A1000C9A1F /* TransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionView.swift; sourceTree = "<group>"; };
 		D35325182AAEB8B2000C9A1F /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
+		D36E596F2AC481B6004E8D9B /* ReportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewModel.swift; sourceTree = "<group>"; };
 		D36F83AB2AA44D6400A07F28 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		D36F83AD2AA4536A00A07F28 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		D36F83B22AA4CBE500A07F28 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -72,6 +75,7 @@
 		D3CAEDA62AA2ECA4007FFCC5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D3CAEDB02AA35D89007FFCC5 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		D3CAEDB22AA36157007FFCC5 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		D3D13B052AC1DD3400CEB011 /* CategorizedExpenses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorizedExpenses.swift; sourceTree = "<group>"; };
 		D3FF9C252ABDEC6400798AFC /* CategoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -174,6 +178,7 @@
 				D36F83B22AA4CBE500A07F28 /* User.swift */,
 				D3FF9C252ABDEC6400798AFC /* CategoryData.swift */,
 				D3333B232AC0378000187485 /* ExpenseData.swift */,
+				D3D13B052AC1DD3400CEB011 /* CategorizedExpenses.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -186,6 +191,7 @@
 				D34BE4B22AB6A9E5005592DD /* TransactionViewModel.swift */,
 				D34BE4BC2AB6FEEE005592DD /* expenseViewModel.swift */,
 				D3333B1F2ABFEEE700187485 /* expsense.swift */,
+				D36E596F2AC481B6004E8D9B /* ReportViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -282,6 +288,7 @@
 				D35325132AAEB3E0000C9A1F /* Expense.swift in Sources */,
 				D3333B242AC0378000187485 /* ExpenseData.swift in Sources */,
 				D3FF9C262ABDEC6400798AFC /* CategoryData.swift in Sources */,
+				D36E59702AC481B6004E8D9B /* ReportViewModel.swift in Sources */,
 				D3333B202ABFEEE700187485 /* expsense.swift in Sources */,
 				D35325192AAEB8B2000C9A1F /* ReportView.swift in Sources */,
 				D30D49732AB41EB000900B26 /* SettingView.swift in Sources */,
@@ -295,6 +302,7 @@
 				D3B68F6A2AAC571200A8FAD9 /* ForgotPasswordView.swift in Sources */,
 				D3CAEDA02AA2ECA3007FFCC5 /* BugetExpenseApp.swift in Sources */,
 				D35325152AAEB54E000C9A1F /* Category.swift in Sources */,
+				D3D13B062AC1DD3400CEB011 /* CategorizedExpenses.swift in Sources */,
 				D34BE4B32AB6A9E5005592DD /* TransactionViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
