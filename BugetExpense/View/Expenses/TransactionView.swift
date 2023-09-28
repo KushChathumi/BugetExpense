@@ -21,66 +21,60 @@ struct TransactionView: View {
 
     var body: some View {
         NavigationView {
-            VStack {
-                Divider().background( LinearGradient(colors: [Color("Purple3"),Color("Purple5")], startPoint: .topLeading, endPoint: .bottomTrailing))
-                List{
-                    Section("Title"){
-                        TextField("Magic Keyboard", text: $transactionVM.expense.title)
-                    }
-
-                    Section("Description"){
-                        TextField("Brought a keyboard at the Apple Store", text: $transactionVM.expense.subtitle)
-                    }
-
-                    Section("Amount"){
-                        TextField("LKR", value: $transactionVM.expense.amount, formatter: NumberFormatter())
-                            .keyboardType(.numberPad)
-                    }
-                    Section("Date"){
-                        DatePicker("Date", selection: $transactionVM.expense.date, displayedComponents: .date)
-                    }
-                    Section("Category"){
-                        Picker("Category", selection: $transactionVM.selectedCategoryIndex) {
-                            ForEach(0..<transactionVM.categories.count, id: \.self) { category in
-                                Text(transactionVM.categories[category].categoryName).tag(category)
-                            }
+                VStack {
+                    Divider().background( LinearGradient(colors: [Color("Purple3"),Color("Purple5")], startPoint: .topLeading, endPoint: .bottomTrailing))
+                    List{
+                        Section("Title"){
+                            TextField("Magic Keyboard", text: $transactionVM.expense.title)
                         }
-                    }
-                    Section("Category") {
-                        if transactionVM.categories.isEmpty {
-                            Text("No categories available")
-                        } else {
-                            Picker("Category", selection: $transactionVM.selectedCategoryIndex) {
-                                ForEach(0..<transactionVM.categories.count, id: \.self) { category in
-                                    Text(transactionVM.categories[category].categoryName).tag(category)
+                        
+                        Section("Description"){
+                            TextField("Brought a keyboard at the Apple Store", text: $transactionVM.expense.subtitle)
+                        }
+                        
+                        Section("Amount"){
+                            TextField("LKR", value: $transactionVM.expense.amount, formatter: NumberFormatter())
+                                .keyboardType(.numberPad)
+                        }
+                        Section("Date"){
+                            DatePicker("Date", selection: $transactionVM.expense.date, displayedComponents: .date)
+                        }
+                        Section("Category") {
+                            if transactionVM.categories.isEmpty {
+                                Text("No categories available")
+                            } else {
+                                Picker("Category", selection: $transactionVM.selectedCategoryIndex) {
+                                    ForEach(0..<transactionVM.categories.count, id: \.self) { category in
+                                        Text(transactionVM.categories[category].categoryName).tag(category)
+                                    }
                                 }
                             }
                         }
+                        
                     }
-
-                }
-
-                Button {
-                    transactionVM.addExpense()
-                    showMessage = true
-                } label: {
-                    ZStack {
-                        LinearGradient(colors: [Color("Purple3"),Color("Purple5")], startPoint: .topLeading, endPoint: .bottomTrailing)
-                            .clipShape(RoundedRectangle (cornerRadius: 10))
-                            .frame(height: 45)
-                            .padding(35)
-
-                        Label("Add", systemImage: "plus")
-                            .labelStyle(.titleOnly)
-                            .fontWeight(.semibold)
-                            .padding( 0)
+                    
+                    Button {
+                        transactionVM.addExpense()
+                        showMessage = true
+                    } label: {
+                        ZStack {
+                            LinearGradient(colors: [Color("Purple3"),Color("Purple5")], startPoint: .topLeading, endPoint: .bottomTrailing)
+                                .clipShape(RoundedRectangle (cornerRadius: 10))
+                                .frame(height: 45)
+                                .padding(35)
+                            
+                            Label("Add", systemImage: "plus")
+                                .labelStyle(.titleOnly)
+                                .fontWeight(.semibold)
+                                .padding( 0)
+                        }
                     }
+                    .foregroundColor(.white)
+                    
+                    Divider()
+                    
                 }
-                .foregroundColor(.white)
-                
-                Divider()
-                
-            }.background(.opacity(0.05))
+                .background(.opacity(0.05))
                 .navigationTitle("Expenses")
                 .navigationBarBackButtonHidden(true) // Hide the default back button
                 .toolbar {
@@ -89,7 +83,7 @@ struct TransactionView: View {
                         Button(action: {
                             // Navigate back to the previous view
                             presentationMode.wrappedValue.dismiss()
-                                
+                            
                         }) {
                             Image(systemName: "arrow.uturn.backward")
                                 .foregroundColor(Color(.white))
