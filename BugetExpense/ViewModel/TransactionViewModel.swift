@@ -96,7 +96,7 @@ class TransactionViewModel: ObservableObject {
 
         // Validate the input
         if expense.title.isEmpty || expense.subtitle.isEmpty || expense.amount <= 0 {
-            alertItem = AlertItem(title: "Error", message: "Please fill in all fields and provide a valid amount.")
+            alertItem = AlertItem(title: "Error", message: "Please make sure all fields are filled out, or create a category if needed.")
             return
         }
 

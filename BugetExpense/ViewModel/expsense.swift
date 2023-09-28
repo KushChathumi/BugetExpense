@@ -34,7 +34,13 @@ class expsense: ObservableObject {
                 
                 for document in documents {
                     do {
-                        let expense = try document.data(as: ExpenseData.self)
+                        var expense = try document.data(as: ExpenseData.self)
+                        
+                        // Round the date to midnight to ensure expenses on the same date are grouped together
+                        let calendar = Calendar.current
+                        let roundedDate = calendar.startOfDay(for: expense.date)
+                        expense.date = roundedDate
+                        
                         self.expenses.append(expense)
                     } catch {
                         print(error)
@@ -52,32 +58,21 @@ class expsense: ObservableObject {
                     }
             }
     }
-
     
-    //    func deleteExpense(deleteExpense: ExpenseData) {
-    //        let db = Firestore.firestore()
-    //
-    //        if let expenseID = deleteExpense.id {
-    //            // Delete the Firestore document associated with the expense ID
-    //            db.collection("expenses").document(expenseID).delete { error in
-    //                if let error = error {
-    //                    // Handle data deletion error and set the custom error message
-    //                    self.errorMessage = "Error deleting expense: \(error.localizedDescription)"
-    //                    print(self.errorMessage)
-    //                } else {
-    //                    DispatchQueue.main.async {
-    //                        // Remove the deleted expense from the list
-    //                        self.expenses.removeAll { data in
-    //                            return data.id == deleteExpense.id
-    //                        }
-    //                    }
-    //                    print("Expense deleted successfully.")
-    //                }
-    //            }
-    //        } else {
-    //            // Handle the case where expense ID is missing
-    //            self.errorMessage = "Expense ID is nil, cannot delete expense."
-    //            print(self.errorMessage)
-    //        }
-    //    }
+    func calculateDateWiseSpendAmounts() -> [String: String] {
+        var dateWiseSpendAmounts: [String: String] = [:]
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d" // Use the desired date format
+        
+        for (date, expenses) in groupedExpenses {
+            let totalAmount = expenses.reduce(0.0) { $0 + $1.amount }
+            let formattedTotalAmount = String(format: "%.2f", totalAmount)
+            let formattedDate = dateFormatter.string(from: date)
+            dateWiseSpendAmounts[formattedDate] = formattedTotalAmount
+        }
+        
+        return dateWiseSpendAmounts
+    }
+
 }

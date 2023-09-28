@@ -14,50 +14,61 @@ struct ExpenseView: View {
     let userID: String? // Assuming you have the user's ID
 
     var body: some View {
+        
         NavigationView {
-            List {
-                ForEach(viewModel.groupedExpenses.keys.sorted(by: >), id: \.self) { date in
-                    Section(header: Text(dateFormatter.string(from: date)).foregroundColor(Color("purple2"))) {
-                        ForEach(viewModel.groupedExpenses[date]!, id: \.self) { expense in
-                            VStack {
-                                HStack {
-                                    VStack(alignment: .leading, spacing: 5) {
-                                        // Display expense title
-                                        Text(expense.title)
-                                            .fontWeight(.semibold)
-                                            .font(.title3)
-                                            .foregroundColor(Color("purple2"))
-                                        
-                                        // Display expense amount
-                                        Text("LKR. \(String(format: "%.2f", expense.amount))")
-                                            .foregroundColor(Color(.gray))
-                                            .font(.system(size: 14))
-                                        
-                                        // Display expense subtitle (with line limit and truncation)
-                                        Text(expense.subtitle)
-                                            .lineLimit(2)
-                                            .truncationMode(.tail)
-                                            .foregroundColor(Color(.gray))
-                                            .font(.system(size: 14))
-                                    }
-                                    Spacer()
-                                    
-                                    // Button to delete the expense
-                                    Button {
-                                        print(expense.id)
-                                    } label: {
-                                        Image(systemName: "trash")
-                                            .resizable()
-                                            .frame(width: 20, height: 20)
-                                    }.accentColor(.red) // Set the button's text color
+            VStack{
+                Divider().background( LinearGradient(colors: [Color("Purple3"),Color("Purple5")], startPoint: .topLeading, endPoint: .bottomTrailing))
+                List {
+                    if viewModel.groupedExpenses.isEmpty {
+                        Text("No expenses to display.")
+                            .foregroundColor(.gray)
+                            .italic()
+                    } else {
+                        ForEach(viewModel.groupedExpenses.keys.sorted(by: >), id: \.self) { date in
+                            Section(header: Text(dateFormatter.string(from: date)).foregroundColor(Color("purple2"))) {
+                                ForEach(viewModel.groupedExpenses[date]!, id: \.self) { expense in
+                                    VStack {
+                                        HStack {
+                                            VStack(alignment: .leading, spacing: 5) {
+                                                // Display expense title
+                                                Text(expense.title)
+                                                    .fontWeight(.semibold)
+                                                    .font(.title3)
+                                                    .foregroundColor(Color("purple2"))
+                                                
+                                                // Display expense amount
+                                                Text("LKR. \(String(format: "%.2f", expense.amount))")
+                                                    .foregroundColor(Color(.gray))
+                                                    .font(.system(size: 14))
+                                                
+                                                // Display expense subtitle (with line limit and truncation)
+                                                Text(expense.subtitle)
+                                                    .lineLimit(2)
+                                                    .truncationMode(.tail)
+                                                    .foregroundColor(Color(.gray))
+                                                    .font(.system(size: 14))
+                                            }
+                                            Spacer()
+                                            
+                                            // Button to delete the expense
+                                            Button {
+                                                print(expense.id)
+                                            } label: {
+                                                Image(systemName: "trash")
+                                                    .resizable()
+                                                    .frame(width: 20, height: 20)
+                                            }.accentColor(.red) // Set the button's text color
+                                        }
+                                    }.padding(0)
                                 }
-                            }.padding(0)
+                            }
                         }
                     }
                 }
-            }
-            .navigationBarTitle("Expenses") // Set the navigation bar title
-            .toolbar {
+                Divider()
+            }.navigationTitle("Expenses")
+            
+             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     // Navigation link to the TransactionView
                     NavigationLink{
@@ -65,6 +76,8 @@ struct ExpenseView: View {
                             .navigationBarBackButtonHidden(true)
                     } label: {
                         Image(systemName: "plus") // Display a plus button in the navigation bar
+                            .tint(.white)
+                            .fontWeight(.heavy)
                     }
                 }
             }
