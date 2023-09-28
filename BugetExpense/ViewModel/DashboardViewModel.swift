@@ -1,5 +1,5 @@
 //
-//  ReportViewModel.swift
+//  DashboardViewModel.swift
 //  BugetExpense
 //
 //  Created by Kushani Abeysinghe on 2023-09-27.
@@ -15,7 +15,7 @@ struct ReportItem: Identifiable {
     let amount: Double
 }
 
-class ReportViewModel: ObservableObject {
+class DashboardViewModel: ObservableObject {
     @Published var reportItems: [ReportItem] = []
     
     init(expensesViewModel: expsense) {
