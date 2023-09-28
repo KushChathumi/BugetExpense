@@ -73,7 +73,20 @@ struct CategoriesView: View {
                             }
                             .navigationTitle("Categories")
                             .padding(6)
-                            
+                            .toolbar {
+                               ToolbarItem(placement: .navigationBarTrailing) {
+                                   // Navigation link to the TransactionView
+                                   Button{
+                                       loginVM.signOut()
+//                                           .navigationBarBackButtonHidden(true)
+                                   } label: {
+                                       Text("Sign out")
+                                           .accentColor(.white)
+                                           .fontWeight(.heavy)
+                                   }
+                               }
+                           }
+        
                             Divider()
                             
                             .padding(.bottom, 5)
@@ -96,3 +109,4 @@ struct CategoriesView: View {
         }
     }
 }
+

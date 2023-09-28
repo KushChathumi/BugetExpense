@@ -95,6 +95,7 @@
 			children = (
 				D35325162AAEB8A1000C9A1F /* TransactionView.swift */,
 				D3333B1D2ABFEED100187485 /* ExpenseView.swift */,
+				D30D49722AB41EB000900B26 /* CategoriesView.swift */,
 			);
 			path = Expenses;
 			sourceTree = "<group>";
@@ -165,7 +166,6 @@
 				D3B68F682AAC56D900A8FAD9 /* Auth */,
 				D30D49702AB41E4300900B26 /* MainView.swift */,
 				D319054B2AA8C7D600953FCC /* ProfileView.swift */,
-				D30D49722AB41EB000900B26 /* CategoriesView.swift */,
 				D34A3E042ABEA5FA00F4F17B /* UserProfileView.swift */,
 				D3B15DBD2AC52532006B08F3 /* LunchScreeen.swift */,
 			);
