@@ -9,34 +9,25 @@ import SwiftUI
 
 struct MainView: View {
     @EnvironmentObject var loginVM: LoginViewModel
+    let categories: [Category] = [] // Populate with your category data
+    @State private var isLoading = false
+    
     var body: some View {
         TabView{
-//            ExpenseListView(viewModel: ExpenseViewModel(), loginVM: LoginViewModel(), userID: loginVM.currentUser?.id)
-//                .tabItem{
-//                    Label("dashboard", systemImage: "tray.and.arrow.up.fill")
-//                }
-            UserProfileView()
-                .tabItem{
-                    Label("dashboard2", systemImage: "tray.and.arrow.up.fill")
-                }
             ExpenseView(viewModel: expsense(), loginVM: LoginViewModel(), userID: loginVM.currentUser?.id)
                 .tabItem{
-                    Label("Expenses", systemImage: "creditcard.fill")
+                    Label("Expenses", systemImage: "note.text.badge.plus")
                 }
-            ReportView()
+            DashboardView(viewModel: expsense(), loginVM: LoginViewModel(),  userID: loginVM.currentUser?.id)
                 .tabItem{
-                    Label("Report", systemImage: "chart.bar.fill")
+                    Label("Dashboard", systemImage: "chart.bar.fill")
                 }
-            SettingView()
+            
+            CategoriesView(categoryVM: CategoryViewModel(userID: loginVM.currentUser?.id ?? ""))
                 .tabItem{
-                    Label("Setting", systemImage: "gearshape.fill")
+                    Label("Categories", systemImage: "gearshape.fill")
                 }
-        }
+        }.accentColor((Color("Purple5")))
     }
 }
-
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView()
-    }
-}
+ 
