@@ -21,3 +21,5 @@ struct ExpenseData: Identifiable, Codable, Hashable {
         return id ?? UUID().uuidString
     }
 }
+
+

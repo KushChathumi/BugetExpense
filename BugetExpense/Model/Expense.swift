@@ -17,7 +17,7 @@ struct Expense: Identifiable, Codable {
     var date: Date
     var userID: String // This property holds the logged-in user's ID
     var category: Category
-    
+
     init(userID: String = "") {
         self.id = ""
         self.title = ""
