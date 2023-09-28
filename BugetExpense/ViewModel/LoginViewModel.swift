@@ -23,6 +23,8 @@ class LoginViewModel : ObservableObject{
     @Published var currentUser: User?
     @Published var hasError = false
     @Published var errorMessage = ""
+    @Published var hasSuccess = false
+    @Published var successMessage = ""
     @Published var userID: String?
     
     // Initialize the ViewModel
@@ -80,6 +82,7 @@ class LoginViewModel : ObservableObject{
             
             // Fetch user data asynchronously
             await fetchUser()
+            self.userID = result.user.uid
         } catch {
             // Handle user creation errors and update error state
             hasError = true
@@ -129,8 +132,8 @@ class LoginViewModel : ObservableObject{
         Auth.auth().sendPasswordReset(withEmail: email) { [self] error in
             // Execute the provided callback and update error state
             callback?(error)
-            self.hasError = true
-            errorMessage = "Email sent to your email address"
+            self.hasSuccess = true
+            successMessage = "Email sent to your email address"
         }
     }
 }

@@ -37,9 +37,9 @@ struct ForgotPasswordView: View {
             }
         }
 //        Error Message popuped
-        .alert("Success", isPresented: $loginVM.hasError) {
+        .alert("Success", isPresented: $loginVM.hasSuccess) {
         } message: {
-            Text(loginVM.errorMessage)
+            Text(loginVM.successMessage)
         }
     }
 }
