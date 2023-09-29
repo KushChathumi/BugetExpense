@@ -52,6 +52,7 @@ struct ExpenseView: View {
                                             
                                             // Button to delete the expense
                                             Button {
+                                                viewModel.deleteExpense(expense)
                                                 print(expense.id)
                                             } label: {
                                                 Image(systemName: "trash")

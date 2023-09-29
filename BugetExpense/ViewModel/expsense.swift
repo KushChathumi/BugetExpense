@@ -37,12 +37,14 @@ class expsense: ObservableObject {
                     do {
                         var expense = try document.data(as: ExpenseData.self)
                         
+                        // Set the id property based on the document ID
+                        expense.id = document.documentID
+                        
                         // Round the date to midnight to ensure expenses on the same date are grouped together
                         let calendar = Calendar.current
                         let roundedDate = calendar.startOfDay(for: expense.date)
                         expense.date = roundedDate
-                        let totalExpense = self.calculateTotalExpenseAmount()
-                        //                        print(totalExpense)
+                        
                         self.expenses.append(expense)
                     } catch {
                         print(error)
@@ -58,10 +60,12 @@ class expsense: ObservableObject {
                     .reduce(into: [Date: [ExpenseData]]()) { result, element in
                         result[element.key] = element.value
                     }
+                
                 // Data is loaded, set dataLoaded to true
                 self.dataLoaded = true
             }
     }
+
     
     func calculateDateWiseSpendAmounts() -> [String: String] {
         var dateWiseSpendAmounts: [String: String] = [:]
@@ -83,4 +87,22 @@ class expsense: ObservableObject {
         let totalAmount = expenses.reduce(0.0) { $0 + $1.amount }
         return totalAmount
     }
+    
+    func deleteExpense(_ expense: ExpenseData) {
+            guard let expenseID = expense.id else {
+                errorMessage = "Expense ID is missing."
+                return
+            }
+
+            let expenseRef = db.collection("expenses").document(expenseID)
+            
+            expenseRef.delete { error in
+                if let error = error {
+                    self.errorMessage = ("Error deleting expense: \(error.localizedDescription)")
+                    print(self.errorMessage)
+                } else {
+                    print("Successfully Deleted ..")
+                }
+            }
+        }
 }

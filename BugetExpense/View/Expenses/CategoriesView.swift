@@ -21,96 +21,116 @@ struct CategoriesView: View {
             VStack{
                 Divider().background( LinearGradient(colors: [Color("Purple3"),Color("Purple5")], startPoint: .topLeading, endPoint: .bottomTrailing))
                 
-                
-                VStack {
-                    List (categoryVM.categories) { category in
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text(category.categoryName)
-                                Spacer()
-                                
-                                Button {
-                                    categoryVM.deleteCategory(deleteCategory: category)
-                                } label: {
-                                    Image(systemName: "minus.circle")
-                                        .foregroundColor(.red)
-                                }
-                                
-                            }
-                            Text(String(category.budget))
+                List (categoryVM.categories) { category in
+                    HStack {
+                        Text(category.categoryName)
+                            .foregroundColor(.primary)
+                        
+                        Spacer()
+                        Text("LKR. \(String(format: "%.2f", category.budget))")
+                            .foregroundColor(.secondary)
+                        
+                        Button(action : {
+                            categoryVM.deleteCategory(deleteCategory: category)
+                        }) {
+                            Image(systemName: "minus.circle")
+                                .foregroundColor(.red)
                         }
-                    }
-                    
-                    Spacer()
-                    
-                    HStack(spacing: 16) {
-                        HStack {
+                    } .padding(.vertical, 8)
+                        .cornerRadius(10)
+                        .shadow(radius: 5)
+                        .listStyle(PlainListStyle())
+                }
+                
+                Spacer()
+                
+                HStack(spacing: 16) {
+                    VStack {
+                        HStack{
                             TextField("New Category", text: $newCategort)
                                 .textFieldStyle(.roundedBorder)
                                 .onSubmit {
                                     handelSubmit()
                                 }
+                            
+                            Spacer()
+                            
+                            if newCategort.count > 0 {
+                                Button{
+                                    newCategort = ""
+                                } label: {
+                                    Label("clear", systemImage: "xmark.circle.fill")
+                                        .labelStyle(.iconOnly)
+                                        .padding(.trailing, 6)
+                                }
+                            }
+                        }
+                        
+                        HStack{
                             TextField("Budget ", text: $budget)
                                 .textFieldStyle(.roundedBorder)
                                 .onSubmit {
                                     handelSubmit()
                                 }
-                        }
-                        
-                        if newCategort.count > 0 {
-                            Button{
-                                newCategort = ""
-                            } label: {
-                                Label("clear", systemImage: "xmark.circle.fill")
-                                    .labelStyle(.iconOnly)
-                                    .foregroundColor(.gray)
-                                    .padding(.trailing, 6)
+                            
+                            Spacer()
+                            
+                            if budget.count > 0 {
+                                Button{
+                                    budget = ""
+                                } label: {
+                                    Label("clear", systemImage: "xmark.circle.fill")
+                                        .labelStyle(.iconOnly)
+                                        .padding(.trailing, 6)
+                                }
                             }
                         }
-                        
-                        Button{
-                            handelSubmit()
-                        }label: {
-                            Label("Submit", systemImage: "paperplane.fill")
-                                .labelStyle(.iconOnly)
-                                .padding(6)
-                        }
-                        .background(.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(6)
-                        .alert("Must Provide a category name and the Budget amount.", isPresented: $isAlertShowing) {
-                            Button("Ok", role: .cancel){
-                                isAlertShowing = false
-                            }
-                        }
-                    }
-                    .navigationTitle("Categories")
-                    .padding(6)
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            // Navigation link to the TransactionView
-                            Button{
-                                loginVM.signOut()
-                            } label: {
-                                Text("Sign out")
-                                    .accentColor(.white)
-                                    .fontWeight(.heavy)
-                            }
-                        }
-                    }
+                    }.shadow(radius: 6)
                     
-                    Divider()
-                        .padding(.bottom, 5)
+                    Button{
+                        handelSubmit()
+                    } label: {
+                        Label("Submit", systemImage: "paperplane.fill")
+                            .labelStyle(.iconOnly)
+                            .padding(15)
+                    }
+                    .background(.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(6)
+                    .alert("Must Provide a category name and the Budget amount.", isPresented: $isAlertShowing) {
+                        Button("Ok", role: .cancel){
+                            isAlertShowing = false
+                        }
+                    }
+                } .padding(.all, 10)
+                   
+                
+                Spacer()
+                
+                Divider()
+                    .padding(.vertical, 5)
+            }
+            .navigationTitle("Categories")
+            .padding(.bottom, 5)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    // Navigation link to the TransactionView
+                    Button{
+                        loginVM.signOut()
+                    } label: {
+                        Text("Sign out")
+                            .accentColor(.white)
+                            .fontWeight(.heavy)
+                    }
                 }
-                .onAppear {
-                    // Call the getData() function when the view appears
-                    categoryVM.getData()
-                    totalBudget = categoryVM.calculateTotalBudget(for: categoryVM.categories)
-                }
+            }.onAppear {
+                // Call the getData() function when the view appears
+                categoryVM.getData()
+                totalBudget = categoryVM.calculateTotalBudget(for: categoryVM.categories)
             }
         }
     }
-    
+   
     func handelSubmit() {
         if newCategort.count > 0 {
             if let budgetValue = Double(budget) {
