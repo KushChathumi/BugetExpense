@@ -40,11 +40,13 @@ class CategoryViewModel: ObservableObject {
                 }
                 
                 if let snapshot = snapshot {
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [self] in
                         // Map Firestore documents to Category objects
                         self.categories = snapshot.documents.compactMap { doc in
                             var categoryData = doc.data()
                             categoryData["id"] = doc.documentID
+                            let totalBudget = self.calculateTotalBudget(for: categories)
+//                            print("Total Budget: \(totalBudget)")
                             return try? Firestore.Decoder().decode(Category.self, from: categoryData)
                         }
                     }
@@ -53,11 +55,11 @@ class CategoryViewModel: ObservableObject {
     }
 
     // Function to add a new category
-    func addCategory(categoryName: String) {
+    func addCategory(categoryName: String, buget: Double) {
         let db = Firestore.firestore()
 
         // Create a new Category object with the provided name and user ID
-        let newCategory = Category(categoryName: categoryName, userID: userID)
+        let newCategory = Category(categoryName: categoryName, userID: userID, budget: buget)
 
         // Encode and add the new category to Firestore
         do {
@@ -105,5 +107,12 @@ class CategoryViewModel: ObservableObject {
             self.errorMessage = "Category ID is nil, cannot delete category."
             print(self.errorMessage)
         }
+    }
+    
+    func calculateTotalBudget(for categories: [Category]) -> Double {
+        let totalBudget = categories
+            .compactMap { Double($0.budget) } // Convert budget strings to doubles
+            .reduce(0.0, +) // Sum all the budget values
+        return totalBudget
     }
 }

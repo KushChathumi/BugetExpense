@@ -34,6 +34,7 @@ struct DashboardTabView: View {
                 }
                 .chartXAxisLabel("Expense Type", position: .bottom)
                 .chartYAxisLabel("Amount", position: .leading)
+                .frame(height: 125)
                 
             }
         }

@@ -25,6 +25,6 @@ struct Expense: Identifiable, Codable {
         self.amount = 0.0
         self.date = Date()
         self.userID = userID // Initialize with the logged-in user's ID
-        self.category = Category(categoryName: "", userID: userID) // Pass the userID to the Category as well
+        self.category = Category(categoryName: "", userID: userID, budget: 0) // Pass the userID to the Category as well
     }
 }

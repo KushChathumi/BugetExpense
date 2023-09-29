@@ -92,46 +92,66 @@ class TransactionViewModel: ObservableObject {
 
     // Function to add a new expense
     func addExpense() {
-        let expensesRef = db.collection("expenses")
+            let expensesRef = db.collection("expenses")
+            
+            // Validate the input
+            if expense.title.isEmpty || expense.subtitle.isEmpty || expense.amount <= 0 {
+                alertItem = AlertItem(title: "Error", message: "Please make sure all fields are filled out, or create a category if needed.")
+                return
+            }
 
-        // Validate the input
-        if expense.title.isEmpty || expense.subtitle.isEmpty || expense.amount <= 0 {
-            alertItem = AlertItem(title: "Error", message: "Please make sure all fields are filled out, or create a category if needed.")
-            return
-        }
+            // Get the selected category
+            let selectedCategory = categories[selectedCategoryIndex]
 
-        do {
-            // Set the category name and ID in the expense data
-            let expenseData: [String: Any] = [
-                "title": expense.title,
-                "subtitle": expense.subtitle,
-                "amount": expense.amount,
-                "date": expense.date,
-                "category": [
-                    "categoryName": categories[selectedCategoryIndex].categoryName,
-                    "id": categories[selectedCategoryIndex].id ?? ""
-                ],
-                "userID": userID // Set the user ID
-            ]
+            // Calculate the total expenses for the selected category
+            let totalCategoryExpense = categoryData.first(where: { $0.name == selectedCategory.categoryName })?.amount ?? 0.0
 
-            // Add the expense to Firestore
-            expensesRef.addDocument(data: expenseData) { [weak self] error in
-                guard let self = self else { return }
+            // Check if the new expense would exceed the budget for the selected category
+            let isExceedingBudget = (totalCategoryExpense + expense.amount) > selectedCategory.budget
+            
+            if isExceedingBudget {
+                alertItem = AlertItem(title: "Warning", message: "Adding this expense will exceed the category budget.")
+            }
+            
+            // Continue to save data to the database regardless of the warning
+            do {
+                // Set the category name and ID in the expense data
+                let expenseData: [String: Any] = [
+                    "title": expense.title,
+                    "subtitle": expense.subtitle,
+                    "amount": expense.amount,
+                    "date": expense.date,
+                    "category": [
+                        "categoryName": selectedCategory.categoryName,
+                        "id": selectedCategory.id ?? "",
+                        "budget": selectedCategory.budget
+                    ],
+                    "userID": userID // Set the user ID
+                ]
 
-                if let error = error {
-                    self.alertItem = AlertItem(title: "Error", message: "Error adding expense: \(error.localizedDescription)")
-                } else {
-                    self.alertItem = AlertItem(title: "Success", message: "Expense added successfully")
-                    self.expense.title = ""
-                    self.expense.subtitle = ""
-                    self.expense.amount = 0.0
-                    self.expense.date = Date()
-                    self.selectedCategoryIndex = 0
+                // Add the expense to Firestore
+                expensesRef.addDocument(data: expenseData) { [weak self] error in
+                    guard let self = self else { return }
 
-                    // Recalculate category expenses after adding a new expense
-                    self.calculateCategoryExpenses()
+                    if let error = error {
+                        self.alertItem = AlertItem(title: "Error", message: "Error adding expense: \(error.localizedDescription)")
+                    } else {
+                        if isExceedingBudget {
+                            self.alertItem = AlertItem(title: "Success", message: "Expense added successfully, but it exceeds the category budget.")
+                        } else {
+                            self.alertItem = AlertItem(title: "Success", message: "Expense added successfully")
+                        }
+                        
+                        self.expense.title = ""
+                        self.expense.subtitle = ""
+                        self.expense.amount = 0
+                        self.expense.date = Date()
+                        self.selectedCategoryIndex = 0
+
+                        // Recalculate category expenses after adding a new expense
+                        self.calculateCategoryExpenses()
+                    }
                 }
             }
         }
-    }
 }

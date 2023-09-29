@@ -13,98 +13,119 @@ struct CategoriesView: View {
     @ObservedObject var categoryVM : CategoryViewModel
     @State private var isAlertShowing = false
     @State private var newCategort: String = ""
+    @State private var budget: String = ""
+    @State private var totalBudget: Double = 0.0
     
     var body: some View {
         NavigationView {
             VStack{
                 Divider().background( LinearGradient(colors: [Color("Purple3"),Color("Purple5")], startPoint: .topLeading, endPoint: .bottomTrailing))
+                
+                
                 VStack {
-                            List (categoryVM.categories) { category in
-                                HStack {
-                                    Text(category.categoryName)
-                                    
-                                    Spacer()
-                                    
-                                    Button {
-                                        categoryVM.deleteCategory(deleteCategory: category)
-                                    } label: {
-                                        Image(systemName: "minus.circle")
-                                            .foregroundColor(.red)
-                                    }
-
-                                }
-                            }
-                            
-                            Spacer()
-                            
-                            HStack(spacing: 16) {
-                               TextField("New Category", text: $newCategort)
-                                    .textFieldStyle(.roundedBorder)
-                                    .onSubmit {
-                                        handelSubmit()
-                                    }
+                    List (categoryVM.categories) { category in
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text(category.categoryName)
+                                Spacer()
                                 
-                                if newCategort.count > 0 {
-                                    Button{
-                                            newCategort = ""
-                                    } label: {
-                                        Label("clear", systemImage: "xmark.circle.fill")
-                                            .labelStyle(.iconOnly)
-                                            .foregroundColor(.gray)
-                                            .padding(.trailing, 6)
-                                    }
+                                Button {
+                                    categoryVM.deleteCategory(deleteCategory: category)
+                                } label: {
+                                    Image(systemName: "minus.circle")
+                                        .foregroundColor(.red)
                                 }
                                 
-                                Button{
-                                    handelSubmit()
-                                }label: {
-                                    Label("Submit", systemImage: "paperplane.fill")
-                                        .labelStyle(.iconOnly)
-                                        .padding(6)
-                                }
-                                .background(.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(6)
-                                .alert("Must Provide a category name", isPresented: $isAlertShowing) {
-                                    Button("Ok", role: .cancel){
-                                        isAlertShowing = false
-                                    }
-                                }
                             }
-                            .navigationTitle("Categories")
-                            .padding(6)
-                            .toolbar {
-                               ToolbarItem(placement: .navigationBarTrailing) {
-                                   // Navigation link to the TransactionView
-                                   Button{
-                                       loginVM.signOut()
-//                                           .navigationBarBackButtonHidden(true)
-                                   } label: {
-                                       Text("Sign out")
-                                           .accentColor(.white)
-                                           .fontWeight(.heavy)
-                                   }
-                               }
-                           }
-        
-                            Divider()
-                            
-                            .padding(.bottom, 5)
+                            Text(String(category.budget))
                         }
+                    }
+                    
+                    Spacer()
+                    
+                    HStack(spacing: 16) {
+                        HStack {
+                            TextField("New Category", text: $newCategort)
+                                .textFieldStyle(.roundedBorder)
+                                .onSubmit {
+                                    handelSubmit()
+                                }
+                            TextField("Budget ", text: $budget)
+                                .textFieldStyle(.roundedBorder)
+                                .onSubmit {
+                                    handelSubmit()
+                                }
+                        }
+                        
+                        if newCategort.count > 0 {
+                            Button{
+                                newCategort = ""
+                            } label: {
+                                Label("clear", systemImage: "xmark.circle.fill")
+                                    .labelStyle(.iconOnly)
+                                    .foregroundColor(.gray)
+                                    .padding(.trailing, 6)
+                            }
+                        }
+                        
+                        Button{
+                            handelSubmit()
+                        }label: {
+                            Label("Submit", systemImage: "paperplane.fill")
+                                .labelStyle(.iconOnly)
+                                .padding(6)
+                        }
+                        .background(.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(6)
+                        .alert("Must Provide a category name and the Budget amount.", isPresented: $isAlertShowing) {
+                            Button("Ok", role: .cancel){
+                                isAlertShowing = false
+                            }
+                        }
+                    }
+                    .navigationTitle("Categories")
+                    .padding(6)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            // Navigation link to the TransactionView
+                            Button{
+                                loginVM.signOut()
+                            } label: {
+                                Text("Sign out")
+                                    .accentColor(.white)
+                                    .fontWeight(.heavy)
+                            }
+                        }
+                    }
+                    
+                    Divider()
+                        .padding(.bottom, 5)
+                }
                 .onAppear {
                     // Call the getData() function when the view appears
                     categoryVM.getData()
+                    totalBudget = categoryVM.calculateTotalBudget(for: categoryVM.categories)
                 }
             }
         }
     }
     
-    func handelSubmit(){
+    func handelSubmit() {
         if newCategort.count > 0 {
-            categoryVM.addCategory(categoryName: newCategort)
-            newCategort = ""
-        }
-        else {
+            if let budgetValue = Double(budget) {
+                categoryVM.addCategory(categoryName: newCategort, buget: budgetValue)
+                newCategort = ""
+                budget = ""
+            } else {
+                // Handle the case where budget is not a valid Double
+                // You can display an error message or show an alert
+                print("Invalid budget value")
+                isAlertShowing = true
+                newCategort = ""
+                budget = ""
+            }
+        } else {
             isAlertShowing = true
         }
     }

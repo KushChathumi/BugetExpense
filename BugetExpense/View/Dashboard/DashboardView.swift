@@ -18,6 +18,15 @@ struct DashboardView: View {
     var body: some View {
         NavigationView {
             VStack{
+                Divider().background( LinearGradient(colors: [Color("Purple3"),Color("Purple5")], startPoint: .topLeading, endPoint: .bottomTrailing))
+                
+                ScrollView(.horizontal, showsIndicators: false){
+                    HStack(spacing: 1){
+                        TotalIncomeView(categoryVM: CategoryViewModel(userID: loginVM.currentUser?.id ?? ""))
+                        TotalExpenseView(expsenseVM: expsense(), userID: loginVM.currentUser?.id ?? "")
+                    }
+                }.background(Color.gray.opacity(0.15))
+                
                 TabView {
                     DashboardTabView(title: "Current Date", dateFilter: .currentDate, viewModel: viewModel, userID: userID)
                         .tabItem {
@@ -30,12 +39,19 @@ struct DashboardView: View {
                             Image(systemName: "calendar")
                             Text("Last Week")
                         }
+//                    ScrollView(.horizontal, showsIndicators: false){
+//                        HStack(spacing: 1){
+//                            TotalIncomeView(categoryVM: CategoryViewModel(userID: loginVM.currentUser?.id ?? ""))
+//                            TotalExpenseView(expsenseVM: expsense(), userID: loginVM.currentUser?.id ?? "")
+//                        }
+//                    }.background(Color.gray.opacity(0.15))
                 }
                 .tabViewStyle(PageTabViewStyle()) // Optional, for page-style tab navigation
                 .navigationTitle("Dashboard")
-                .background( LinearGradient(colors: [Color("Purple3"),Color("Purple5")], startPoint: .topLeading, endPoint: .bottomTrailing))
                 .accentColor(.blue)
-                
+                .frame(height: 230)
+                .padding(.top, 0)
+               
                 Text("Day Wise Total Amount").font(.title3)
                 
                 List {

@@ -14,15 +14,14 @@ struct MainView: View {
     
     var body: some View {
         TabView{
-            ExpenseView(viewModel: expsense(), loginVM: LoginViewModel(), userID: loginVM.currentUser?.id)
-                .tabItem{
-                    Label("Expenses", systemImage: "note.text.badge.plus")
-                }
             DashboardView(viewModel: expsense(), loginVM: LoginViewModel(),  userID: loginVM.currentUser?.id)
                 .tabItem{
                     Label("Dashboard", systemImage: "chart.bar.fill")
                 }
-            
+            ExpenseView(viewModel: expsense(), loginVM: LoginViewModel(), userID: loginVM.currentUser?.id)
+                .tabItem{
+                    Label("Expenses", systemImage: "note.text.badge.plus")
+                }
             CategoriesView(categoryVM: CategoryViewModel(userID: loginVM.currentUser?.id ?? ""))
                 .tabItem{
                     Label("Categories", systemImage: "gearshape.fill")

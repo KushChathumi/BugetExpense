@@ -17,6 +17,7 @@ class expsense: ObservableObject {
     @Published var groupedExpenses = [Date: [ExpenseData]]()
     @Published var errorMessage = ""
     @Published var expens = [Expense]()
+    @Published var dataLoaded = false // Indicates whether data is loaded
     
     func fetchExpenses(forUserID userID: String) {
         db.collection("expenses")
@@ -40,7 +41,8 @@ class expsense: ObservableObject {
                         let calendar = Calendar.current
                         let roundedDate = calendar.startOfDay(for: expense.date)
                         expense.date = roundedDate
-                        
+                        let totalExpense = self.calculateTotalExpenseAmount()
+                        //                        print(totalExpense)
                         self.expenses.append(expense)
                     } catch {
                         print(error)
@@ -56,6 +58,8 @@ class expsense: ObservableObject {
                     .reduce(into: [Date: [ExpenseData]]()) { result, element in
                         result[element.key] = element.value
                     }
+                // Data is loaded, set dataLoaded to true
+                self.dataLoaded = true
             }
     }
     
@@ -74,5 +78,9 @@ class expsense: ObservableObject {
         
         return dateWiseSpendAmounts
     }
-
+    
+    func calculateTotalExpenseAmount() -> Double {
+        let totalAmount = expenses.reduce(0.0) { $0 + $1.amount }
+        return totalAmount
+    }
 }
